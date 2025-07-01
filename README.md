@@ -110,4 +110,4 @@ Aplikasi ini menggunakan lisensi [MIT](LICENSE).
 
 ---
 
-> Dibuat dengan
+> Dibuat dengan flutter dan ❤️
