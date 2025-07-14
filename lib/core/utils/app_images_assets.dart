@@ -120,4 +120,11 @@ class AppImageAssets {
   static const String imagesTravel = "assets/images/travel.png";
 
   static const String userProfile = "assets/images/user_profile.png";
+
+  static const String bgLogin = "assets/images/bg_login.png";
+
+  static const String imagesIconLogoutSelected =
+      "assets/images/icon_logout_selected.svg";
+
+  static const String imagesIconLogout = "assets/images/icon_logout.svg";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/auth/auth_service.dart';
 import 'package:movie_app/core/theme/controller/app_theme_cubit.dart';
 import 'package:movie_app/core/utils/app_string.dart';
 import 'package:movie_app/core/widgets/custome_app_bar.dart';
@@ -10,6 +11,11 @@ import 'package:movie_app/feature/profile/presentation/widgets/profile_item_widg
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  void _signOut() {
+    final authService = AuthService();
+    authService.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,42 +39,39 @@ class ProfileScreen extends StatelessWidget {
               height: 20,
             ),
           ),
-          SliverToBoxAdapter(
-            child: ProfileItemWidget(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[0],
-              onTap: () {},
-            ),
+          SliverList.builder(
+            itemCount: ProfileOptionModel.getAllProfileOptions().length,
+            itemBuilder: (context, index) {
+              final option = ProfileOptionModel.getAllProfileOptions()[index];
+              // Menangani item Dark Mode secara khusus karena memiliki Switch
+              if (option.title == AppString.darkMode) {
+                return ProfileItemDarkMode(
+                  profileOptionModel: option,
+                  onTap: () {
+                    AppThemeCubit.instanse.changeTheme();
+                  },
+                );
+              }
+              // Item profil standar
+              return ProfileItemWidget(
+                profileOptionModel: option,
+                onTap: () {
+                  // TODO: Tambahkan logika navigasi untuk setiap item di sini jika perlu
+                },
+              );
+            },
           ),
           SliverToBoxAdapter(
-            child: ProfileItemWidget(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[1],
-              onTap: () {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ProfileItemWidget(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[2],
-              onTap: () {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ProfileItemWidget(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[3],
-              onTap: () {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ProfileItemWidget(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[4],
-              onTap: () {},
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ProfileItemDarkMode(
-              profileOptionModel: ProfileOptionModel.getAllProfileOptions()[5],
-              onTap: () {
-                AppThemeCubit.instanse.changeTheme();
-              },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: ElevatedButton(
+                onPressed: _signOut,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(AppString.signOut),
+              ),
             ),
           ),
         ],
