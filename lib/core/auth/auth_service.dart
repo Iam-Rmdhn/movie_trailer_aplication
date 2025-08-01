@@ -1,38 +1,42 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthService extends ChangeNotifier {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  // Mock authentication - tidak menggunakan Firebase
+  bool _isLoggedIn = false;
 
-  // Sign In
-  Future<UserCredential> signInWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+  bool get isLoggedIn => _isLoggedIn;
+
+  // Mock Sign In
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    // Simulasi delay network
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Mock validation - terima semua email/password untuk demo
+    if (email.isNotEmpty && password.isNotEmpty) {
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      throw Exception('Email dan password tidak boleh kosong');
     }
   }
 
-  // Sign Up
-  Future<UserCredential> signUpWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+  // Mock Sign Up
+  Future<void> signUpWithEmailAndPassword(String email, String password) async {
+    // Simulasi delay network
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Mock validation
+    if (email.isNotEmpty && password.isNotEmpty) {
+      _isLoggedIn = true;
+      notifyListeners();
+    } else {
+      throw Exception('Email dan password tidak boleh kosong');
     }
   }
 
-  // Sign out
+  // Mock Sign Out
   Future<void> signOut() async {
-    return await _firebaseAuth.signOut();
+    _isLoggedIn = false;
+    notifyListeners();
   }
 }

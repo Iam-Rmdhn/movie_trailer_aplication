@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/feature/home/data/model/movie_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:movie_app/core/data/models/tmdb_movie.dart';
+import 'package:movie_app/core/network/api_constants.dart';
 
 class CustomeMovieItem extends StatelessWidget {
-  final MovieModel model;
-  const CustomeMovieItem({super.key, required this.model});
+  final TMDBMovie movie;
+  const CustomeMovieItem({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,28 @@ class CustomeMovieItem extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: AssetImage(model.url),
-                    fit: BoxFit.cover,
-                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: movie.posterPath != null
+                      ? CachedNetworkImage(
+                          imageUrl: ApiConstants.getImageUrl(movie.posterPath),
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            color: Colors.grey[300],
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.error),
+                          ),
+                        )
+                      : Container(
+                          color: Colors.grey[300],
+                          child: const Icon(Icons.movie, size: 50),
+                        ),
                 ),
               ),
             ),
@@ -38,7 +58,12 @@ class CustomeMovieItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    '${model.rate}',
+                    '${movie.voteAverage.toStringAsFixed(1)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
