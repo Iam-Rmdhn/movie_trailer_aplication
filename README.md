@@ -126,45 +126,45 @@ Ini bukan sekadar aplikasi film biasa - tapi **platform penemuan film yang kompr
 📁 movie_ui_application/
 ├── 📁 lib/
 │   ├── 📁 core/
-│   │   ├── 📁 auth/                 # Authentication logic
-│   │   ├── 📁 component/            # Reusable UI components
+│   │   ├── 📁 auth/                 # Logika autentikasi
+│   │   ├── 📁 component/            # Komponen UI yang dapat digunakan kembali
 │   │   ├── 📁 data/
-│   │   │   ├── 📁 models/           # Data models (TMDBMovie, MovieDetail)
-│   │   │   └── 📁 services/         # API services (TMDB integration)
-│   │   ├── 📁 helper/               # Utility helpers
-│   │   ├── 📁 network/              # Network configuration & constants
-│   │   ├── 📁 theme/                # App theming (dark/light modes)
-│   │   ├── 📁 utils/                # Constants and utilities
-│   │   └── 📁 widgets/              # Global reusable widgets
+│   │   │   ├── 📁 models/           # Model data (TMDBMovie, MovieDetail)
+│   │   │   └── 📁 services/         # Service API (integrasi TMDB)
+│   │   ├── 📁 helper/               # Helper utilitas
+│   │   ├── 📁 network/              # Konfigurasi jaringan & konstanta
+│   │   ├── 📁 theme/                # Tema aplikasi (mode gelap/terang)
+│   │   ├── 📁 utils/                # Konstanta dan utilitas
+│   │   └── 📁 widgets/              # Widget global yang dapat digunakan kembali
 │   ├── 📁 feature/
-│   │   ├── 📁 home/                 # Home screen with movie lists
+│   │   ├── 📁 home/                 # Layar beranda dengan daftar film
 │   │   │   ├── 📁 data/
-│   │   │   │   └── 📁 bloc/         # Movie state management
+│   │   │   │   └── 📁 bloc/         # State management film
 │   │   │   └── 📁 presentation/
-│   │   │       ├── 📁 views/        # Movie list views & header
-│   │   │       └── 📁 widget/       # Custom movie widgets
-│   │   ├── 📁 movie_detail/         # Movie detail feature
+│   │   │       ├── 📁 views/        # Tampilan daftar film & header
+│   │   │       └── 📁 widget/       # Widget film kustom
+│   │   ├── 📁 movie_detail/         # Fitur detail film
 │   │   │   ├── 📁 data/
-│   │   │   │   └── 📁 bloc/         # Detail state management
+│   │   │   │   └── 📁 bloc/         # State management detail
 │   │   │   └── 📁 presentation/
-│   │   │       ├── 📁 screens/      # Detail screen
-│   │   │       └── 📁 widgets/      # Detail-specific widgets
-│   │   ├── 📁 explore/              # Movie discovery & search
-│   │   ├── 📁 download/             # Download management
-│   │   ├── 📁 profile/              # User profile
-│   │   ├── 📁 sign_in/              # Authentication
-│   │   ├── 📁 sign_up/              # User registration
-│   │   └── 📁 user_list/            # User lists & favorites
-│   ├── 📄 main.dart                 # App entry point
-│   └── 📄 movie_app.dart            # Main app configuration
+│   │   │       ├── 📁 screens/      # Layar detail
+│   │   │       └── 📁 widgets/      # Widget khusus detail
+│   │   ├── 📁 explore/              # Penemuan & pencarian film
+│   │   ├── 📁 download/             # Manajemen unduhan
+│   │   ├── 📁 profile/              # Profil pengguna
+│   │   ├── 📁 sign_in/              # Autentikasi masuk
+│   │   ├── 📁 sign_up/              # Registrasi pengguna
+│   │   └── 📁 user_list/            # Daftar film pengguna & favorit
+│   ├── 📄 main.dart                 # Entry point aplikasi
+│   └── 📄 movie_app.dart            # Konfigurasi aplikasi utama
 ├── 📁 assets/
-│   └── 📁 images/                   # App icons and assets
-├── 📁 android/                      # Android-specific configurations
-├── 📁 ios/                          # iOS-specific configurations
-├── 📁 web/                          # Web-specific configurations
-├── 📁 windows/                      # Windows desktop configuration
-├── 📄 pubspec.yaml                  # Dependencies and metadata
-└── 📄 TMDB_INTEGRATION.md           # API integration documentation
+│   └── 📁 images/                   # Ikon aplikasi dan aset
+├── 📁 android/                      # Konfigurasi khusus Android
+├── 📁 ios/                          # Konfigurasi khusus iOS
+├── 📁 web/                          # Konfigurasi khusus Web
+├── 📁 windows/                      # Konfigurasi desktop Windows
+├── 📄 pubspec.yaml                  # Dependensi dan metadata
+└── 📄 TMDB_INTEGRATION.md           # Dokumentasi integrasi API
 ```
 
 ---
@@ -203,8 +203,8 @@ Aplikasi ini menggunakan **The Movie Database (TMDB) API** untuk data film real-
 
 1. **Clone repository:**
    ```bash
-   git clone https://github.com/Iam-Rmdhn/movie_ui_aplication.git
-   cd movie_ui_aplication
+   git clone https://github.com/Iam-Rmdhn/movie_ui_application.git
+   cd movie_ui_application
    ```
 
 2. **Install dependencies | Install dependensi:**
@@ -318,7 +318,7 @@ We welcome contributions from the community! Here's how you can help make this p
 
 1. **Fork the repository**
    ```bash
-   git fork https://github.com/Iam-Rmdhn/movie_ui_aplication.git
+   git fork https://github.com/Iam-Rmdhn/movie_ui_application.git
    ```
 
 2. **Create a feature branch**
