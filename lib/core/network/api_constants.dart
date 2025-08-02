@@ -17,12 +17,24 @@ class ApiConstants {
   static const String movieDetails = '/movie';
   static const String movieGenres = '/genre/movie/list';
 
+  // Detail movie endpoints
+  static String getMovieDetailsEndpoint(int movieId) => '/movie/$movieId';
+  static String getMovieCreditsEndpoint(int movieId) =>
+      '/movie/$movieId/credits';
+  static String getMovieVideosEndpoint(int movieId) => '/movie/$movieId/videos';
+  static String getMovieImagesEndpoint(int movieId) => '/movie/$movieId/images';
+  static String getSimilarMoviesEndpoint(int movieId) =>
+      '/movie/$movieId/similar';
+  static String getRecommendationsEndpoint(int movieId) =>
+      '/movie/$movieId/recommendations';
+
   // Helper method untuk membuat URL lengkap dengan API key
   static String getMoviesUrl(String endpoint,
       {Map<String, dynamic>? queryParams}) {
     final params = queryParams ?? {};
     params['api_key'] = apiKey;
-    params['language'] = 'id-ID'; // Bahasa Indonesia
+    params['language'] =
+        'en-US'; // Bahasa Inggris untuk overview yang lebih lengkap
 
     final queryString =
         params.entries.map((e) => '${e.key}=${e.value}').join('&');

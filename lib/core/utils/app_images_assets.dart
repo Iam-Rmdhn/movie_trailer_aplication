@@ -6,10 +6,6 @@ class AppImageAssets {
 
   static const String imagesAppLogoPng = "assets/images/app_logo_png.png";
 
-  static const String imagesAvater = "assets/images/avater.png";
-
-  static const String imagesBatman = "assets/images/batman.png";
-
   static const String imagesDownloadMovieFive =
       "assets/images/download_movie_five.png";
 
@@ -92,32 +88,7 @@ class AppImageAssets {
 
   static const String imagesIconTrash = "assets/images/icon_trash.svg";
 
-  static const String imagesMoonMan = "assets/images/moon_man.png";
-
-  static const String imagesNewMovieAdam = "assets/images/new_movie_adam.png";
-
-  static const String imagesNewMovieMoon = "assets/images/new_movie_moon.png";
-
-  static const String imagesNewMovieMorius =
-      "assets/images/new_movie_morius.png";
-
-  static const String imagesNewMoviePanther =
-      "assets/images/new_movie_panther.png";
-
-  static const String imagesNewMovieRed = "assets/images/new_movie_red.png";
-
-  static const String imagesNewMovieThor = "assets/images/new_movie_thor.png";
-
   static const String imagesNoWayHome = "assets/images/no_way_home.png";
-
-  static const String imagesSonic = "assets/images/sonic.png";
-
-  static const String imagesSplashAndroid12 =
-      "assets/images/splash_android_12.png";
-
-  static const String imagesSplashScreen = "assets/images/splash_screnn.png";
-
-  static const String imagesTravel = "assets/images/travel.png";
 
   static const String userProfile = "assets/images/user_profile.png";
 

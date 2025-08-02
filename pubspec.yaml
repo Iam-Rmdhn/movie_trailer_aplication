@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   flutter_launcher_icons: ^0.14.1
-  flutter_native_splash: ^2.4.3
   flutter_svg: ^2.0.15
   google_fonts: ^6.2.1
   shared_preferences: ^2.3.3

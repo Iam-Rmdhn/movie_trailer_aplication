@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/utils/app_string.dart';
 import 'package:movie_app/feature/home/data/bloc/movie_bloc.dart';
 import 'package:movie_app/feature/home/data/bloc/movie_event.dart';
-import 'package:movie_app/feature/home/presentation/views/home_movie_header_view.dart';
+import 'package:movie_app/feature/home/presentation/views/popular_movies_header_view.dart';
 import 'package:movie_app/feature/home/presentation/views/api_movie_list_view.dart';
 import 'package:movie_app/feature/home/presentation/widget/custome_row_text.dart';
 
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(
-            child: HomeMovieHeaderView(),
+            child: PopularMoviesHeaderView(),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 15),
@@ -61,20 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ApiMovieListView(
                 movieType: MovieType.nowPlaying,
-              ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: CustomeRowText(title: "Film Popular"),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ApiMovieListView(
-                movieType: MovieType.popular,
               ),
             ),
           ),
