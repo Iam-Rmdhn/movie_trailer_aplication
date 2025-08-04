@@ -28,15 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
       onRefresh: () async {
         context.read<MovieBloc>().add(RefreshMovies());
       },
-      child: CustomScrollView(
+      child: const CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: PopularMoviesHeaderView(),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 15),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: CustomeRowText(title: AppString.topMoviesThisweek),
@@ -44,13 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: ApiMovieListView(
                 movieType: MovieType.topRated,
               ),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: CustomeRowText(title: AppString.newReleases),
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: ApiMovieListView(
                 movieType: MovieType.nowPlaying,
               ),

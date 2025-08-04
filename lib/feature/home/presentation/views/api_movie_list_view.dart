@@ -40,7 +40,7 @@ class ApiMovieListView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error, size: 50, color: Colors.red),
+                  const Icon(Icons.error, size: 50, color: Colors.red),
                   const SizedBox(height: 16),
                   Text(
                     'Error: ${state.message}',

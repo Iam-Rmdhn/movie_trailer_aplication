@@ -68,7 +68,7 @@ class CustomeMovieItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      '${movie.voteAverage.toStringAsFixed(1)}',
+                      movie.voteAverage.toStringAsFixed(1),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,

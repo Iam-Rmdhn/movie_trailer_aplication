@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/data/models/movie_detail.dart';
+import 'package:movie_app/feature/movie_detail/presentation/screens/in_app_trailer_screen.dart';
 
 class VideoSection extends StatelessWidget {
   final MovieVideos videos;
+  final String? movieTitle; // Add movie title parameter
 
   const VideoSection({
     super.key,
     required this.videos,
+    this.movieTitle,
   });
 
   @override
@@ -118,7 +121,7 @@ class VideoSection extends StatelessWidget {
                       ),
                     ),
 
-                    // Tap handler
+                    // Tap handler dengan efek visual
                     Positioned.fill(
                       child: Material(
                         color: Colors.transparent,
@@ -127,6 +130,46 @@ class VideoSection extends StatelessWidget {
                           onTap: () {
                             _playVideo(context, video);
                           },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.transparent,
+                            ),
+                            child: Stack(
+                              children: [
+                                // Hover effect
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.black.withOpacity(0.1),
+                                  ),
+                                ),
+                                // Watch now indicator
+                                Positioned(
+                                  top: 8,
+                                  left: 8,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 3,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      'TONTON',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -141,36 +184,12 @@ class VideoSection extends StatelessWidget {
   }
 
   void _playVideo(BuildContext context, Video video) {
-    // TODO: Implement video player functionality
-    // For now, show a dialog with YouTube URL
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(video.name),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Video akan dibuka di YouTube'),
-            const SizedBox(height: 8),
-            Text(
-              'https://www.youtube.com/watch?v=${video.key}',
-              style: const TextStyle(fontSize: 12, color: Colors.blue),
-            ),
-          ],
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => InAppTrailerScreen(
+          video: video,
+          movieTitle: movieTitle ?? 'Unknown Movie',
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Tutup'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // TODO: Launch YouTube URL
-            },
-            child: const Text('Buka YouTube'),
-          ),
-        ],
       ),
     );
   }

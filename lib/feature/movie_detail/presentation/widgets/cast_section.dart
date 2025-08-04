@@ -16,7 +16,22 @@ class CastSection extends StatelessWidget {
     final cast = credits.cast.take(10).toList(); // Show max 10 cast members
 
     if (cast.isEmpty) {
-      return const SizedBox.shrink();
+      return Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.orange.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.orange.withOpacity(0.3)),
+        ),
+        child: const Text(
+          'No cast information available for this movie',
+          style: TextStyle(
+            color: Colors.orange,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
     }
 
     return Column(

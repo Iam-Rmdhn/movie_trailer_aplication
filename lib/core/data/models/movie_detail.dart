@@ -188,15 +188,20 @@ class MovieCredits extends Equatable {
   });
 
   factory MovieCredits.fromJson(Map<String, dynamic> json) {
+    print(
+        'Parsing MovieCredits - Raw JSON keys: ${json.keys.toList()}'); // Debug log
+
+    final castData = json['cast'] as List<dynamic>?;
+    final crewData = json['crew'] as List<dynamic>?;
+
+    print('Cast array length: ${castData?.length ?? 0}'); // Debug log
+    print('Crew array length: ${crewData?.length ?? 0}'); // Debug log
+
     return MovieCredits(
       id: json['id'] ?? 0,
-      cast: (json['cast'] as List<dynamic>?)
-              ?.map((castMember) => Cast.fromJson(castMember))
-              .toList() ??
+      cast: castData?.map((castMember) => Cast.fromJson(castMember)).toList() ??
           [],
-      crew: (json['crew'] as List<dynamic>?)
-              ?.map((crewMember) => Crew.fromJson(crewMember))
-              .toList() ??
+      crew: crewData?.map((crewMember) => Crew.fromJson(crewMember)).toList() ??
           [],
     );
   }
@@ -338,12 +343,24 @@ class MovieVideos extends Equatable {
   });
 
   factory MovieVideos.fromJson(Map<String, dynamic> json) {
+    print(
+        'Parsing MovieVideos - Raw JSON keys: ${json.keys.toList()}'); // Debug log
+
+    final resultsData = json['results'] as List<dynamic>?;
+    print('Videos array length: ${resultsData?.length ?? 0}'); // Debug log
+
+    if (resultsData != null && resultsData.isNotEmpty) {
+      for (int i = 0; i < resultsData.length && i < 3; i++) {
+        final video = resultsData[i];
+        print(
+            'Video $i: type=${video['type']}, site=${video['site']}, name=${video['name']}'); // Debug log
+      }
+    }
+
     return MovieVideos(
       id: json['id'] ?? 0,
-      results: (json['results'] as List<dynamic>?)
-              ?.map((video) => Video.fromJson(video))
-              .toList() ??
-          [],
+      results:
+          resultsData?.map((video) => Video.fromJson(video)).toList() ?? [],
     );
   }
 

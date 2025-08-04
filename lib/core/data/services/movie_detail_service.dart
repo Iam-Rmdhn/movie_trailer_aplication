@@ -38,15 +38,27 @@ class MovieDetailService {
         ApiConstants.getMovieCreditsEndpoint(movieId),
       );
 
+      print('Fetching credits from: $url'); // Debug log
+
       final response = await _client.get(Uri.parse(url));
+
+      print('Credits API Response Status: ${response.statusCode}'); // Debug log
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return MovieCredits.fromJson(data);
+        print(
+            'Credits Data: ${data.toString().substring(0, data.toString().length > 200 ? 200 : data.toString().length)}...'); // Debug log
+        final credits = MovieCredits.fromJson(data);
+        print(
+            'Credits parsed - Cast count: ${credits.cast.length}, Crew count: ${credits.crew.length}'); // Debug log
+        return credits;
       } else {
+        print(
+            'Credits API Error: ${response.statusCode} - ${response.body}'); // Debug log
         throw Exception('Failed to load movie credits: ${response.statusCode}');
       }
     } catch (e) {
+      print('Credits Exception: $e'); // Debug log
       throw Exception('Error fetching movie credits: $e');
     }
   }
@@ -58,15 +70,35 @@ class MovieDetailService {
         ApiConstants.getMovieVideosEndpoint(movieId),
       );
 
+      print('Fetching videos from: $url'); // Debug log
+
       final response = await _client.get(Uri.parse(url));
+
+      print('Videos API Response Status: ${response.statusCode}'); // Debug log
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return MovieVideos.fromJson(data);
+        print(
+            'Videos Data: ${data.toString().substring(0, data.toString().length > 200 ? 200 : data.toString().length)}...'); // Debug log
+        final videos = MovieVideos.fromJson(data);
+        print(
+            'Videos parsed - Total count: ${videos.results.length}'); // Debug log
+
+        // Filter YouTube trailers
+        final trailers = videos.results
+            .where(
+                (video) => video.type == 'Trailer' && video.site == 'YouTube')
+            .toList();
+        print('YouTube Trailers found: ${trailers.length}'); // Debug log
+
+        return videos;
       } else {
+        print(
+            'Videos API Error: ${response.statusCode} - ${response.body}'); // Debug log
         throw Exception('Failed to load movie videos: ${response.statusCode}');
       }
     } catch (e) {
+      print('Videos Exception: $e'); // Debug log
       throw Exception('Error fetching movie videos: $e');
     }
   }

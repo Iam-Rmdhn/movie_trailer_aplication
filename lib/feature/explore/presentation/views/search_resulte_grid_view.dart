@@ -29,7 +29,7 @@ class SearchResulteGridView extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Icon(Icons.error, size: 50, color: Colors.red),
+                    const Icon(Icons.error, size: 50, color: Colors.red),
                     const SizedBox(height: 16),
                     Text(
                       'Error: ${state.message}',

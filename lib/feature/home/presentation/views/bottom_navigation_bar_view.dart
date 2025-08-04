@@ -6,7 +6,7 @@ import 'package:movie_app/core/utils/app_string.dart';
 class BottomNavigationBarView extends StatelessWidget {
   final int currentScreen;
   final void Function(int) onTap;
-  BottomNavigationBarView(
+  const BottomNavigationBarView(
       {super.key, required this.currentScreen, required this.onTap});
 
   @override

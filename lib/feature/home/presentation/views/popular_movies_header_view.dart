@@ -286,7 +286,7 @@ class _PopularMoviesHeaderViewState extends State<PopularMoviesHeaderView> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                '${movie.voteAverage.toStringAsFixed(1)}',
+                movie.voteAverage.toStringAsFixed(1),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
