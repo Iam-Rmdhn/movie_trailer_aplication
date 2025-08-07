@@ -27,6 +27,8 @@ dependencies:
   video_player: ^2.8.6
   url_launcher: ^6.2.5
   webview_flutter: ^4.7.0
+  # Authentication
+  supabase_flutter: ^2.5.6
   # Utility
   equatable: ^2.0.5
 

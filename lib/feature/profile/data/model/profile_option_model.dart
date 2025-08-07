@@ -37,6 +37,10 @@ class ProfileOptionModel {
         imagePath: AppImageAssets.imagesIconHelp,
         title: AppString.helpCenter,
       ),
+      ProfileOptionModel(
+        imagePath: AppImageAssets.imagesIconLogout,
+        title: AppString.logout,
+      ),
     ];
   }
 }

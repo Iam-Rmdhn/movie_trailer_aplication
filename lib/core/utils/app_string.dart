@@ -36,6 +36,7 @@ abstract class AppString {
   static const String sort = 'Sort';
 
   static const String signOut = 'Sign Out';
+  static const String logout = 'Logout';
   static const String signIn = 'Sign In';
   static const String signUp = 'Sign Up';
   static const String email = 'Email';

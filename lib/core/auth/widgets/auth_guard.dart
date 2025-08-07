@@ -3,46 +3,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/auth/bloc/auth_bloc.dart';
 import 'package:movie_app/core/auth/bloc/auth_event.dart';
 import 'package:movie_app/feature/sign_in/presentation/screens/sign_in_screen.dart';
-import 'package:movie_app/feature/home/presentation/screens/main_screen.dart';
 
-class AuthGate extends StatefulWidget {
-  const AuthGate({super.key});
+class AuthGuard extends StatelessWidget {
+  final Widget child;
+  final Widget? loadingWidget;
 
-  @override
-  State<AuthGate> createState() => _AuthGateState();
-}
-
-class _AuthGateState extends State<AuthGate> {
-  bool _initialized = false;
+  const AuthGuard({
+    super.key,
+    required this.child,
+    this.loadingWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        // Initialize auth state only once when AuthGate is first loaded
-        if (state is AuthInitial && !_initialized) {
-          _initialized = true;
-          context.read<AuthBloc>().add(AuthInitialize());
-        }
-      },
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        if (state is AuthInitial && !_initialized) {
+        if (state is AuthInitial) {
           // Initialize auth state
-          _initialized = true;
           context.read<AuthBloc>().add(AuthInitialize());
           return _buildLoading();
         }
 
         if (state is AuthLoading) {
-          return _buildLoading();
+          return loadingWidget ?? _buildLoading();
         }
 
         if (state is AuthAuthenticated) {
-          // User is logged in, navigate to main app
-          return const MainScreen();
+          return child;
         }
 
-        // AuthUnauthenticated or AuthError - show login
+        // AuthUnauthenticated or AuthError
         return const SignInScreen();
       },
     );
@@ -60,7 +50,7 @@ class _AuthGateState extends State<AuthGate> {
             ),
             SizedBox(height: 16),
             Text(
-              'Memeriksa status login...',
+              'Memuat...',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

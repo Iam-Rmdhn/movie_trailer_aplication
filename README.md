@@ -11,6 +11,7 @@
 [![Dart](https://img.shields.io/badge/Dart-3.5+-blue?style=flat-square&logo=dart)](https://dart.dev/)
 [![TMDB](https://img.shields.io/badge/TMDB-API-green?style=flat-square)](https://www.themoviedb.org/)
 [![BLoC](https://img.shields.io/badge/State-BLoC-orange?style=flat-square)](https://bloclibrary.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Auth-blue?style=flat-square)](https://supabase.com/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
 **⭐ Beri Star jika project ini bermanfaat! ⭐**
@@ -27,27 +28,38 @@
 - [🏗️ Arsitektur Sistem](#️-arsitektur-sistem)
 - [📁 Struktur Folder](#-struktur-folder)
 - [📱 Screenshots](#-screenshots)
-- [🛠️ Instalasi](#️-instalasi)
+- [� Sistem Authentication](#-sistem-authentication)
+- [�🛠️ Instalasi](#️-instalasi)
 - [🚀 Quick Start](#-quick-start)
 - [⚡ Teknologi](#-teknologi)
 - [🤝 Kontribusi](#-kontribusi)
+- [🛠️ Troubleshooting](#️-troubleshooting)
 
 ---
 
 ## 🎯 Tentang Proyek
 
-**Movie UI Application** adalah aplikasi mobile modern yang dibangun dengan **Flutter** dan terintegrasi dengan **TMDB (The Movie Database) API**. Aplikasi ini menyediakan pengalaman menonton film yang luar biasa dengan antarmuka yang elegan dan fitur-fitur canggih.
+**Movie UI Application** adalah aplikasi mobile modern yang dibangun dengan **Flutter** dan terintegrasi dengan **TMDB (The Movie Database) API** serta **Supabase** untuk authentication. Aplikasi ini menyediakan pengalaman menonton film yang luar biasa dengan antarmuka yang elegan, sistem authentication yang aman, dan fitur-fitur canggih.
 
 ### 🌟 Keunggulan Utama
+- 🔐 **Authentication System**: Sistem login/register aman dengan Supabase backend
 - 🎨 **UI/UX Modern**: Desain antarmuka yang elegan dan user-friendly
 - ⚡ **Performa Tinggi**: Optimasi dengan BLoC pattern dan caching gambar
-- 🌐 **Data Real-time**: Integrasi langsung dengan TMDB API
-- 📱 **Multi-platform**: Mendukung Android, iOS, dan Web
-- 🎥 **Fitur Lengkap**: Dari pencarian hingga menonton trailer in-app
+- 🌐 **Multi-API Integration**: TMDB untuk data film, Supabase untuk user management
+- 📱 **Multi-platform**: Mendukung Android, iOS, Web, dan Windows
+- 🎥 **Fitur Personal**: Personal movie lists, preferences, dan profil user
 
 ---
 
 ## ✨ Fitur Unggulan
+
+### 🔐 **Sistem Authentication**
+- **📧 Login Email/Password**: Authentication dengan Supabase backend
+- **✍️ Register Account**: Registrasi akun baru dengan validasi email
+- **🔒 Secure Auth Flow**: State management dengan BLoC pattern untuk keamanan optimal
+- **🚪 Smart Auth Gate**: Auto-redirect berdasarkan status login setelah splash screen
+- **👤 User Profile**: Profil pengguna tersinkronisasi dengan data dari Supabase
+- **🔓 Enhanced Logout**: Tombol logout modern dengan desain red fill dan feedback visual
 
 ### 🎬 **Eksplorasi Film**
 - **🔥 Film Trending**: Header carousel otomatis dengan 10 film terpopuler
@@ -60,15 +72,16 @@
 - **🎭 Cast & Crew**: Daftar lengkap pemeran dan kru produksi
 - **🎥 Video Trailer**: Tonton trailer langsung dalam aplikasi dengan WebView
 - **🎪 Rekomendasi**: Film serupa dan yang direkomendasikan
-- **💾 My List**: Simpan film favorit ke daftar pribadi
+- **💾 My List**: Simpan film favorit ke daftar pribadi per user
 - **📥 Download Tracker**: Kelola film yang sudah didownload
 
 ### 🏗️ **Keunggulan Teknis**
 - **🧩 Clean Architecture**: Pemisahan logic dengan BLoC pattern
-- **🔄 State Management**: BLoC untuk mengelola state aplikasi
-- **🌐 API Integration**: Real-time data dari TMDB API
-- **📱 Responsive Design**: UI adaptif untuk berbagai ukuran layar
-- **⚡ Performance**: Lazy loading dan image caching
+- **🔄 Advanced State Management**: BLoC untuk authentication dan app state
+- **🌐 Multi-API Integration**: TMDB API untuk film data, Supabase untuk authentication
+- **📱 Responsive Design**: UI adaptif untuk berbagai ukuran layar dan orientasi
+- **⚡ Optimized Performance**: Lazy loading, image caching, dan session management
+- **🎨 Custom UI Components**: Widget reusable dengan desain konsisten dan modern
 
 ---
 
@@ -76,43 +89,62 @@
 
 ```mermaid
 graph TD
-    A[🚀 Splash Screen] --> B[🏠 Home Screen]
-    B --> C{Pilih Aksi}
+    A[🚀 Splash Screen] --> B{🔐 Auth Gate}
     
-    C -->|Lihat Film Popular| D[🎬 Popular Movies]
-    C -->|Cari Film| E[🔍 Search Screen]
-    C -->|Explore| F[🌟 Explore Screen]
-    C -->|Profile| G[👤 Profile Screen]
+    B -->|User Logged In| C[🏠 Home Screen]
+    B -->|User Not Logged In| D[🔑 Login Screen]
     
-    D --> H[📽️ Movie Detail]
-    E --> H
-    F --> H
+    D --> E{Login Actions}
+    E -->|Login Success| C
+    E -->|Go to Register| F[✍️ Register Screen]
+    E -->|Login Failed| D
     
-    H --> I{Detail Actions}
-    I -->|Tonton Trailer| J[🎥 In-App Trailer]
-    I -->|Simpan ke List| K[💾 My List]
-    I -->|Lihat Cast| L[🎭 Cast & Crew]
-    I -->|Film Serupa| M[🎪 Similar Movies]
+    F --> G{Register Actions}
+    G -->|Register Success| C
+    G -->|Back to Login| D
+    G -->|Register Failed| F
     
-    G --> N[⚙️ Settings]
-    G --> O[🌙 Theme Toggle]
-    G --> P[📥 Downloads]
+    C --> H{Pilih Aksi}
     
-    J --> H
-    K --> Q[📋 User List Screen]
-    L --> H
-    M --> H
+    H -->|Lihat Film Popular| I[🎬 Popular Movies]
+    H -->|Cari Film| J[🔍 Search Screen]
+    H -->|Explore| K[🌟 Explore Screen]
+    H -->|Profile| L[👤 Profile Screen]
+    
+    I --> M[📽️ Movie Detail]
+    J --> M
+    K --> M
+    
+    M --> N{Detail Actions}
+    N -->|Tonton Trailer| O[🎥 In-App Trailer]
+    N -->|Simpan ke List| P[💾 My List]
+    N -->|Lihat Cast| Q[🎭 Cast & Crew]
+    N -->|Film Serupa| R[🎪 Similar Movies]
+    
+    L --> S[⚙️ Settings]
+    L --> T[🌙 Theme Toggle]
+    L --> U[📥 Downloads]
+    L --> V{Logout Action}
+    V -->|Logout Confirm| W[🔓 Enhanced Logout]
+    W --> D
+    
+    O --> M
+    P --> X[📋 User List Screen]
+    Q --> M
+    R --> M
 ```
 
 ### 📋 Penjelasan User Flow
 
 1. **🚀 Splash Screen**: Pembuka aplikasi dengan animasi Lottie
-2. **🏠 Home Screen**: Halaman utama dengan carousel film trending
-3. **🔍 Search & Explore**: Pencarian film dengan filter advanced
-4. **📽️ Movie Detail**: Informasi lengkap film dengan berbagai aksi
-5. **🎥 Trailer Viewing**: Menonton trailer langsung dalam aplikasi
-6. **💾 Personal Lists**: Mengelola koleksi film pribadi
-7. **👤 Profile Management**: Pengaturan tema dan preferensi
+2. **🔐 Auth Gate**: Pemeriksaan status login otomatis setelah splash
+3. **🔑 Login/Register**: Sistem authentication dengan Supabase untuk akses aman
+4. **🏠 Home Screen**: Halaman utama dengan carousel film trending dan data personal
+5. **🔍 Search & Explore**: Pencarian film dengan filter advanced
+6. **📽️ Movie Detail**: Informasi lengkap film dengan berbagai aksi
+7. **🎥 Trailer Viewing**: Menonton trailer langsung dalam aplikasi
+8. **💾 Personal Lists**: Mengelola koleksi film pribadi per user account
+9. **👤 Profile Management**: Pengaturan tema, preferensi, dan logout dengan UI modern
 
 ---
 
@@ -207,7 +239,11 @@ Struktur folder aplikasi ini dirancang menggunakan **Clean Architecture** dengan
 │   ├── 🚀 main.dart               # Entry point aplikasi
 │   ├── 📱 movie_app.dart          # Root widget aplikasi
 │   ├── 🔧 core/                   # Core components & utilities
-│   │   ├── auth/                  # Authentication logic
+│   │   ├── auth/                  # Authentication system dengan Supabase
+│   │   │   ├── models/           # Auth data models (user, auth_state)
+│   │   │   ├── services/         # Supabase auth service & configuration
+│   │   │   ├── bloc/             # Authentication BLoC state management
+│   │   │   └── widgets/          # Auth UI components (custom fields, buttons)
 │   │   ├── component/             # Reusable components
 │   │   ├── data/
 │   │   │   ├── models/            # Data models
@@ -269,7 +305,14 @@ Struktur folder aplikasi ini dirancang menggunakan **Clean Architecture** dengan
 │       │       ├── screens/      # Profile screens
 │       │       ├── views/        # Profile views
 │       │       └── widgets/      # Profile widgets
-│       ├── 🔐 sign_in/           # Authentication
+│       ├── 🔐 sign_in/           # Login authentication screens
+│       │   └── presentation/
+│       │       ├── screens/      # Login screen dengan validasi
+│       │       └── widgets/      # Login form components
+│       ├── ✍️ sign_up/           # Register authentication screens  
+│       │   └── presentation/
+│       │       ├── screens/      # Register screen dengan validasi email
+│       │       └── widgets/      # Register form components
 │       └── 📋 user_list/         # User's movie list
 ├── 🧪 test/                      # Unit & widget tests
 ├── 🌐 web/                       # Web platform files
@@ -296,12 +339,13 @@ Setiap feature memiliki struktur yang konsisten:
 - **`presentation/widgets/`**: Widget spesifik feature
 
 #### 🎯 **Key Features**
-- **Home**: Menampilkan film trending dengan auto-slide carousel
+- **Authentication**: Sistem login/register dengan Supabase dan BLoC state management
+- **Home**: Menampilkan film trending dengan auto-slide carousel dan data personal user
 - **Movie Detail**: Detail lengkap film dengan cast, trailer, dan rekomendasi
-- **Explore**: Pencarian dan filter film advanced
-- **Profile**: Manajemen pengaturan user dan tema
-- **Download**: Tracking film yang sudah didownload
-- **User List**: Daftar film favorit user
+- **Explore**: Pencarian dan filter film advanced dengan hasil yang dipersonalisasi
+- **Profile**: Manajemen pengaturan user, tema, dan logout dengan UI modern
+- **Download**: Tracking film yang sudah didownload per user account
+- **User List**: Daftar film favorit personal yang tersinkronisasi per user
 
 ---
 
@@ -321,7 +365,78 @@ Setiap feature memiliki struktur yang konsisten:
 
 ---
 
-## 🛠️ Instalasi
+## � Sistem Authentication
+
+Aplikasi ini menggunakan **Supabase** sebagai backend authentication yang aman dan modern, dengan implementasi **BLoC pattern** untuk state management yang optimal.
+
+### ✨ **Fitur Authentication**
+
+#### 🔑 **Login System**
+- **Email & Password**: Validasi input real-time dengan format checking
+- **Error Handling**: Pesan error dalam bahasa Indonesia yang user-friendly
+- **Auto Login**: Session persistent dengan secure token management
+- **Loading States**: UI feedback yang smooth dengan loading indicators
+
+#### ✍️ **Register System**  
+- **Email Validation**: Verifikasi format email dan keunikan
+- **Password Security**: Minimum 6 karakter dengan validation feedback
+- **Account Creation**: Otomatis redirect ke main app setelah registrasi sukses
+- **Error Prevention**: Validasi real-time mencegah input yang tidak valid
+
+#### 🚪 **Auth Gate & Navigation**
+- **Smart Routing**: Auto-redirect berdasarkan authentication status
+- **Session Check**: Verifikasi token saat app startup
+- **Seamless Flow**: Transisi mulus antara auth screens dan main app
+- **Security**: Perlindungan route yang memerlukan authentication
+
+#### 👤 **User Profile Integration**
+- **Dynamic Profile**: Data user tersinkronisasi dari Supabase
+- **Theme Preferences**: Pengaturan tema per user account
+- **Session Management**: Real-time session status monitoring
+- **Secure Logout**: Clear session dengan konfirmasi user
+
+### 🎨 **Enhanced UI Components**
+
+#### 🔴 **Modern Logout Button**
+- **Red Fill Design**: Tombol logout dengan background merah yang eye-catching
+- **Consistent Icon Size**: Icon 24x24 pixel untuk visual balance
+- **Shadow Effects**: Subtle shadow untuk depth dan premium feel
+- **Responsive Feedback**: Hover dan tap states untuk better UX
+
+#### 📱 **Custom Form Components**
+- **CustomTextField**: Input fields dengan validation state indicators
+- **CustomButton**: Tombol dengan loading states dan disabled modes
+- **AuthScaffold**: Layout konsisten untuk semua authentication screens
+
+### 🏗️ **Technical Implementation**
+
+```mermaid
+graph TB
+    A[🚀 App Start] --> B[🔐 Supabase Init]
+    B --> C[📱 AuthGate Check]
+    
+    C --> D{User Status}
+    D -->|Authenticated| E[🏠 Main App]
+    D -->|Not Authenticated| F[🔑 Login Screen]
+    
+    F --> G[📧 User Input]
+    G --> H[🛡️ Supabase Auth]
+    H --> I{Auth Result}
+    I -->|Success| J[💾 Store Session]
+    I -->|Error| K[⚠️ Show Error]
+    
+    J --> E
+    K --> F
+    
+    E --> L[👤 Profile Access]
+    L --> M[🚪 Logout Option]
+    M --> N[🔓 Clear Session]
+    N --> F
+```
+
+---
+
+## �🛠️ Instalasi
 
 ### 📋 **Prasyarat**
 
@@ -352,7 +467,20 @@ flutter doctor
    flutter pub get
    ```
 
-3. **Setup TMDB API Key** 🔑
+3. **Setup Supabase Authentication** 🔐
+   
+   - Buat project di [Supabase](https://supabase.com) (gratis)
+   - Ambil Project URL dan Anon Key dari Settings > API
+   - Edit file `lib/core/auth/services/supabase_config.dart`:
+   
+   ```dart
+   class SupabaseConfig {
+     static const String supabaseUrl = 'your_supabase_project_url'; // 🔴 GANTI INI!
+     static const String supabaseAnonKey = 'your_supabase_anon_key'; // 🔴 GANTI INI!
+   }
+   ```
+
+4. **Setup TMDB API Key** 🔑
    
    - Daftar di [TMDB](https://www.themoviedb.org/signup) (gratis)
    - Buat API key di [API Settings](https://www.themoviedb.org/settings/api)
@@ -366,7 +494,7 @@ flutter doctor
    }
    ```
 
-4. **Jalankan Aplikasi**
+5. **Jalankan Aplikasi**
    ```bash
    # Debug mode
    flutter run
@@ -415,6 +543,7 @@ flutter create --platforms=web .
 | **Framework** | Flutter | 3.24+ | Cross-platform UI framework |
 | **Language** | Dart | 3.5+ | Programming language |
 | **State Management** | BLoC | 8.1+ | Business Logic Component |
+| **Backend** | Supabase | Latest | Authentication & database backend |
 | **API** | TMDB API | v3 | Movie database |
 | **HTTP Client** | http | 1.2+ | API communication |
 | **Image Caching** | cached_network_image | 3.3+ | Optimized image loading |
@@ -432,6 +561,9 @@ dependencies:
   # State Management
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
+  
+  # Authentication & Backend
+  supabase_flutter: ^2.5.6
   
   # Network & API
   http: ^1.2.2
@@ -563,7 +695,18 @@ Terima kasih untuk semua kontributor yang telah membantu project ini:
 
 ### ❓ **Masalah Umum & Solusi**
 
-#### 🔑 **API Key Issues**
+#### � **Authentication Issues**
+```bash
+❌ Error: Login failed / Supabase connection error
+✅ Solution: 
+   1. Pastikan Supabase URL dan Anon Key valid
+   2. Check file lib/core/auth/services/supabase_config.dart
+   3. Verifikasi koneksi internet
+   4. Check Supabase project status di dashboard
+   5. Restart aplikasi setelah update configuration
+```
+
+#### �🔑 **API Key Issues**
 ```bash
 ❌ Error: Failed to load movies (401 Unauthorized)
 ✅ Solution: 
