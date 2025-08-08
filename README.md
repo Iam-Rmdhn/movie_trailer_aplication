@@ -457,11 +457,11 @@ Setiap feature memiliki struktur yang konsisten:
 
 | 🏠 Beranda | 📽️ Detail Film | 🔍 Pencarian |
 |-------------|---------------|----------------|
-| ![Home](https://via.placeholder.com/250x450/1a1a1a/ffffff?text=Home+Screen) | ![Details](https://via.placeholder.com/250x450/1a1a1a/ffffff?text=Movie+Details) | ![Search](https://via.placeholder.com/250x450/1a1a1a/ffffff?text=Search+Results) |
+| ![Home](assets\page_preview\HomePage.png) | ![Details](assets\page_preview\DetailPage.png) | ![Search](assets\page_preview\ExplorePage.png) |
 
 | 🌙 Tema Gelap | ☀️ Tema Terang | 🎥 Trailer In-App |
 |------------|-------------|--------------|
-| ![Dark](https://via.placeholder.com/250x450/1a1a1a/ffffff?text=Dark+Theme) | ![Light](https://via.placeholder.com/250x450/f0f0f0/333333?text=Light+Theme) | ![Trailer](https://via.placeholder.com/250x450/1a1a1a/ffffff?text=In-App+Trailer) |
+| ![Dark](assets\page_preview\DetailPage.png) | ![Light](assets\page_preview\mode_terang.png) | ![Trailer](assets\page_preview\Play_Videos.png) |
 
 </div>
 

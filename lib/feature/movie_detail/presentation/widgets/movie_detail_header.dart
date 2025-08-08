@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movie_app/core/data/models/movie_detail.dart';
 import 'package:movie_app/core/data/models/tmdb_movie.dart';
+import 'package:movie_app/core/data/services/movie_detail_service.dart';
 import 'package:movie_app/core/network/api_constants.dart';
+import 'package:movie_app/feature/movie_detail/presentation/screens/simple_trailer_screen.dart';
 import 'package:movie_app/feature/user_list/presentation/widgets/add_to_list_button.dart';
 
 class MovieDetailHeader extends StatelessWidget {
@@ -14,6 +16,69 @@ class MovieDetailHeader extends StatelessWidget {
     required this.movieDetail,
     required this.movie,
   });
+
+  Future<void> _handlePlay(BuildContext context) async {
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      // Try to get movie videos/trailers
+      final movieDetailService = MovieDetailService();
+      final videos = await movieDetailService.getMovieVideos(movie.id);
+
+      // Check if context is still mounted
+      if (!context.mounted) return;
+
+      // Hide loading dialog
+      Navigator.of(context).pop();
+
+      final trailers = videos.results
+          .where((video) =>
+              video.type.toLowerCase() == 'trailer' &&
+              video.site.toLowerCase() == 'youtube')
+          .toList();
+
+      if (trailers.isNotEmpty) {
+        // If trailer is available, show trailer screen
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SimpleTrailerScreen(
+              video: trailers.first,
+              movieTitle: movie.title,
+            ),
+          ),
+        );
+      } else {
+        // If no trailer available, show snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Trailer tidak tersedia untuk film ini'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      // Check if context is still mounted
+      if (!context.mounted) return;
+
+      // Hide loading dialog
+      Navigator.of(context).pop();
+
+      // Show error snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error loading trailer: ${e.toString()}'),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,9 +278,7 @@ class MovieDetailHeader extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () {
-                                  // TODO: Implement play functionality
-                                },
+                                onPressed: () => _handlePlay(context),
                                 icon: const Icon(Icons.play_arrow),
                                 label: const Text('Play'),
                                 style: ElevatedButton.styleFrom(
@@ -228,14 +291,26 @@ class MovieDetailHeader extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.2),
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white.withOpacity(0.2)
+                                    : Colors.black.withOpacity(0.1),
+                                border: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? Border.all(
+                                        color: Colors.black.withOpacity(0.2),
+                                        width: 1)
+                                    : null,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: AddToListButton(
                                   movie: movie,
                                   iconSize: 24,
-                                  iconColor: Colors.white,
+                                  iconColor: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black87,
                                   addedIconColor: Colors.green,
                                 ),
                               ),
