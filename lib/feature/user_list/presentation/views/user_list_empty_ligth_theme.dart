@@ -8,34 +8,40 @@ class UserListEmptyLigthTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 250,
-          child: Image(
-            image: AssetImage(AppImageAssets.imagesEmptyListLight),
-            fit: BoxFit.scaleDown,
+    return const Padding(
+      padding: EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 250,
+            child: Image(
+              image: AssetImage(AppImageAssets.imagesEmptyListLight),
+              fit: BoxFit.scaleDown,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          AppString.yourListEmpty,
-          style: TextStyle(
-            color: AppColors.red,
-            fontWeight: FontWeight.bold,
+          SizedBox(height: 24),
+          Text(
+            AppString.yourListEmpty,
+            style: TextStyle(
+              color: AppColors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          AppString.emptyListMessage,
-          textAlign: TextAlign.center,
-        ),
-      ],
+          SizedBox(height: 12),
+          Text(
+            AppString.emptyListMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

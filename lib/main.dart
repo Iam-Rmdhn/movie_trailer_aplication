@@ -8,6 +8,8 @@ import 'package:movie_app/core/data/services/movie_api_service.dart';
 import 'package:movie_app/core/helper/storage_helper.dart';
 import 'package:movie_app/core/theme/controller/app_theme_cubit.dart';
 import 'package:movie_app/feature/home/data/bloc/movie_bloc.dart';
+import 'package:movie_app/feature/user_list/data/bloc/user_list_bloc.dart';
+import 'package:movie_app/feature/user_list/data/bloc/user_list_event.dart';
 import 'package:movie_app/movie_app.dart';
 
 void main() async {
@@ -31,6 +33,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => AuthBloc(AuthService()),
+        ),
+        BlocProvider(
+          create: (context) => UserListBloc()..add(LoadUserList()),
         ),
       ],
       child: const MovieApp(),

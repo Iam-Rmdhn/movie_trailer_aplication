@@ -19,6 +19,7 @@ abstract class AppString {
   static const String play = 'Play';
   static const String search = 'Search';
   static const String newReleases = 'New Releases';
+  static const String upcoming = 'Upcoming';
   static const String language = 'Language';
   static const String helpCenter = 'Help Center';
   static const String privacyPolicy = 'Privacy policy';

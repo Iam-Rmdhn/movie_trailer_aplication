@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movie_app/core/data/models/tmdb_movie.dart';
 import 'package:movie_app/core/network/api_constants.dart';
 import 'package:movie_app/feature/movie_detail/presentation/screens/movie_detail_screen.dart';
+import 'package:movie_app/feature/user_list/presentation/widgets/add_to_list_button.dart';
 
 class CustomeMovieItem extends StatelessWidget {
   final TMDBMovie movie;
@@ -74,6 +75,26 @@ class CustomeMovieItem extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 10,
+                right: 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      shape: BoxShape.circle,
+                    ),
+                    child: AddToListButton(
+                      movie: movie,
+                      iconSize: 20,
+                      iconColor: Colors.white,
+                      addedIconColor: Colors.red,
                     ),
                   ),
                 ),

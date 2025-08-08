@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:movie_app/core/data/models/movie_detail.dart';
 import 'package:movie_app/core/data/models/tmdb_movie.dart';
 import 'package:movie_app/core/network/api_constants.dart';
+import 'package:movie_app/feature/user_list/presentation/widgets/add_to_list_button.dart';
 
 class MovieDetailHeader extends StatelessWidget {
   final MovieDetail movieDetail;
@@ -224,13 +225,19 @@ class MovieDetailHeader extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            IconButton(
-                              onPressed: () {
-                                // TODO: Implement add to watchlist
-                              },
-                              icon: const Icon(Icons.add, color: Colors.white),
-                              style: IconButton.styleFrom(
-                                backgroundColor: Colors.white.withOpacity(0.2),
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white.withOpacity(0.2),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AddToListButton(
+                                  movie: movie,
+                                  iconSize: 24,
+                                  iconColor: Colors.white,
+                                  addedIconColor: Colors.green,
+                                ),
                               ),
                             ),
                           ],

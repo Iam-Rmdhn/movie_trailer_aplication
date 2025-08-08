@@ -62,9 +62,11 @@
 - **🔓 Enhanced Logout**: Tombol logout modern dengan desain red fill dan feedback visual
 
 ### 🎬 **Eksplorasi Film**
-- **🔥 Film Trending**: Header carousel otomatis dengan 10 film terpopuler
+- **🔥 Film Trending**: Header carousel otomatis dengan 10 film terpopuler dan tombol Play/My List yang fungsional
+- **🆕 Now Playing**: Kategori film yang sedang tayang di bioskop dengan data real-time
+- **📅 Upcoming**: Kategori film yang akan datang dengan tanggal rilis
 - **🔍 Pencarian Canggih**: Cari film dengan berbagai filter
-- **� Kategori Lengkap**: Popular, Top Rated, Now Playing, Upcoming
+- **📊 Kategori Lengkap**: Popular, Top Rated, Now Playing, Upcoming
 - **🎨 Tema Adaptif**: Mode Dark/Light sesuai preferensi
 
 ### 📽️ **Detail Film Komprehensif**
@@ -72,16 +74,82 @@
 - **🎭 Cast & Crew**: Daftar lengkap pemeran dan kru produksi
 - **🎥 Video Trailer**: Tonton trailer langsung dalam aplikasi dengan WebView
 - **🎪 Rekomendasi**: Film serupa dan yang direkomendasikan
-- **💾 My List**: Simpan film favorit ke daftar pribadi per user
+- **💾 My List Enhanced**: Sistem penyimpanan film favorit dengan BLoC state management
+  - ✅ **Visual Feedback**: Icon berubah dari + ke ✓ (hijau) saat film ditambahkan
+  - 💾 **Persistent Storage**: Data tersimpan lokal dengan SharedPreferences
+  - 🔄 **Real-time Updates**: Status tersinkronisasi di semua layar
+  - 📱 **Cross-Screen Sync**: My List terintegrasi di header, detail, dan list screen
 - **📥 Download Tracker**: Kelola film yang sudah didownload
 
 ### 🏗️ **Keunggulan Teknis**
 - **🧩 Clean Architecture**: Pemisahan logic dengan BLoC pattern
-- **🔄 Advanced State Management**: BLoC untuk authentication dan app state
+- **🔄 Advanced State Management**: BLoC untuk authentication, movie data, dan user lists
 - **🌐 Multi-API Integration**: TMDB API untuk film data, Supabase untuk authentication
 - **📱 Responsive Design**: UI adaptif untuk berbagai ukuran layar dan orientasi
 - **⚡ Optimized Performance**: Lazy loading, image caching, dan session management
 - **🎨 Custom UI Components**: Widget reusable dengan desain konsisten dan modern
+- **🎬 Smart Play Button**: Auto-loading trailer dengan fallback ke detail screen
+- **🔄 Enhanced Animation**: Smooth transitions dengan AnimatedSwitcher untuk empty states
+
+---
+
+## 🆕 **Fitur Terbaru v2.1.0**
+
+### 🎬 **Enhanced Home Experience**
+- **📺 Now Playing Section**: Kategori film yang sedang tayang di bioskop
+  - 🔄 Real-time data dari TMDB API
+  - 🎨 Grid layout dengan poster berkualitas tinggi
+  - 🚀 Navigation langsung ke movie detail
+  
+- **📅 Upcoming Movies**: Daftar film yang akan datang
+  - 📊 Informasi tanggal rilis yang akurat
+  - 🎯 Preview film-film terbaru yang ditunggu-tunggu
+  - 🔗 Integrasi dengan movie detail screen
+
+### 🎮 **Interactive Popular Movies Header**
+- **▶️ Smart Play Button**: Tombol play yang cerdas dengan teknologi canggih
+  - 🎥 **Auto-Trailer Loading**: Mencari trailer otomatis dari API
+  - 📺 **In-App Trailer Screen**: Buka trailer langsung dalam aplikasi
+  - 🔄 **Graceful Fallback**: Otomatis ke detail screen jika trailer tidak tersedia
+  - ⏳ **Loading Indicator**: Feedback visual saat loading trailer
+  - 🛡️ **Error Handling**: Penanganan error yang elegant dengan snackbar
+  
+- **💾 Enhanced My List Button**: 
+  - ✅ **Real-time Visual Feedback**: Icon berubah dari + ke ✓ hijau
+  - 🔄 **State Synchronization**: Status terintegrasi di semua screen
+  - 💾 **Persistent Storage**: Data tersimpan dengan SharedPreferences
+  - ⚡ **Instant Response**: Update UI tanpa delay
+
+### 📋 **My List System 2.0**
+- **🎯 Complete BLoC Integration**: State management yang robust
+  - 📦 **UserListBloc**: Dedicated BLoC untuk user movie lists
+  - 🔄 **Real-time State Updates**: LoadUserList, AddMovieToList, RemoveMovieToList
+  - 💾 **Persistent Storage**: Integrasi dengan StorageHelper untuk local data
+  - 🔁 **Cross-Screen Sync**: Status tersinkronisasi di header dan detail screens
+
+- **🎨 Enhanced UI Components**:
+  - 🟢 **AddToListButton**: Custom button dengan state-aware icon switching
+  - 📱 **MyListActionButton**: Reusable component untuk berbagai layar
+  - 🎭 **UserListMovieItem**: Custom list item dengan action buttons
+  - ✨ **Smooth Animations**: AnimatedSwitcher untuk transisi yang halus
+
+- **🖼️ **Improved Empty State**:
+  - 🌙 **Theme-Adaptive**: Desain berbeda untuk dark/light mode
+  - 🎨 **Professional Layout**: Centered design dengan proper spacing
+  - 🔄 **Smooth Transitions**: No more layout jumping dengan ValueKey
+  - 📱 **Responsive Design**: Optimal di semua ukuran layar
+
+### 🛠️ **Technical Improvements**
+- **🔧 Enhanced Storage System**: 
+  - 📦 JSON serialization untuk movie data
+  - 🔄 Efficient load/save operations
+  - 🛡️ Error handling untuk data corruption
+  
+- **🎨 UI/UX Enhancements**:
+  - ⚡ Loading states di semua async operations
+  - 🎭 Consistent design language across features
+  - 📱 Better responsive behavior
+  - 🔄 Smooth animations dan transitions
 
 ---
 
@@ -109,29 +177,43 @@ graph TD
     H -->|Lihat Film Popular| I[🎬 Popular Movies]
     H -->|Cari Film| J[🔍 Search Screen]
     H -->|Explore| K[🌟 Explore Screen]
+    H -->|My List| X[📋 User List Screen]
     H -->|Profile| L[👤 Profile Screen]
     
     I --> M[📽️ Movie Detail]
+    I --> N{Header Actions}
+    N -->|Play Button| O[🎥 Smart Trailer Loading]
+    N -->|My List Button| P[💾 Add/Remove from List]
+    
     J --> M
     K --> M
     
-    M --> N{Detail Actions}
-    N -->|Tonton Trailer| O[🎥 In-App Trailer]
-    N -->|Simpan ke List| P[💾 My List]
-    N -->|Lihat Cast| Q[🎭 Cast & Crew]
-    N -->|Film Serupa| R[🎪 Similar Movies]
+    M --> Q{Detail Actions}
+    Q -->|Tonton Trailer| O[🎥 In-App Trailer]
+    Q -->|Simpan ke List| P[💾 My List Enhanced]
+    Q -->|Lihat Cast| R[🎭 Cast & Crew]
+    Q -->|Film Serupa| S[🎪 Similar Movies]
     
-    L --> S[⚙️ Settings]
-    L --> T[🌙 Theme Toggle]
-    L --> U[📥 Downloads]
-    L --> V{Logout Action}
-    V -->|Logout Confirm| W[🔓 Enhanced Logout]
-    W --> D
+    O --> T{Trailer Actions}
+    T -->|Trailer Available| U[📺 SimpleTrailerScreen]
+    T -->|No Trailer| M
     
-    O --> M
-    P --> X[📋 User List Screen]
-    Q --> M
+    P --> V{List Actions}
+    V -->|Add to List| W[✅ Visual Feedback + Icon]
+    V -->|Remove from List| Y[❌ Remove + Icon Update]
+    
+    L --> Z[⚙️ Settings]
+    L --> AA[🌙 Theme Toggle]
+    L --> BB[📥 Downloads]
+    L --> CC{Logout Action}
+    CC -->|Logout Confirm| DD[🔓 Enhanced Logout]
+    DD --> D
+    
+    U --> M
+    X --> EE[📋 User List Management]
+    EE --> P
     R --> M
+    S --> M
 ```
 
 ### 📋 Penjelasan User Flow
@@ -139,12 +221,14 @@ graph TD
 1. **🚀 Splash Screen**: Pembuka aplikasi dengan animasi Lottie
 2. **🔐 Auth Gate**: Pemeriksaan status login otomatis setelah splash
 3. **🔑 Login/Register**: Sistem authentication dengan Supabase untuk akses aman
-4. **🏠 Home Screen**: Halaman utama dengan carousel film trending dan data personal
-5. **🔍 Search & Explore**: Pencarian film dengan filter advanced
-6. **📽️ Movie Detail**: Informasi lengkap film dengan berbagai aksi
-7. **🎥 Trailer Viewing**: Menonton trailer langsung dalam aplikasi
-8. **💾 Personal Lists**: Mengelola koleksi film pribadi per user account
-9. **👤 Profile Management**: Pengaturan tema, preferensi, dan logout dengan UI modern
+4. **🏠 Home Screen**: Halaman utama dengan carousel film trending dan kategori baru (Now Playing, Upcoming)
+5. **🎮 Interactive Header**: Popular movies header dengan tombol Play dan My List yang fungsional
+6. **▶️ Smart Play**: Tombol play otomatis mencari trailer → buka trailer screen atau fallback ke detail
+7. **💾 Enhanced My List**: Sistem add/remove dengan visual feedback dan state synchronization
+8. **🔍 Search & Explore**: Pencarian film dengan filter advanced
+9. **📽️ Movie Detail**: Informasi lengkap film dengan berbagai aksi terintegrasi
+10. **📋 My List Management**: Halaman khusus untuk mengelola koleksi film pribadi
+11. **👤 Profile Management**: Pengaturan tema, preferensi, dan logout dengan UI modern
 
 ---
 
@@ -283,7 +367,10 @@ Struktur folder aplikasi ini dirancang menggunakan **Clean Architecture** dengan
 │       │   │       └── movie_event.dart   # Movie events
 │       │   └── presentation/
 │       │       ├── views/        # Home views
-│       │       └── widget/       # Home widgets
+│       │       │   └── popular_movies_header_view.dart # Enhanced header with functional buttons
+│       │       ├── widget/       # Home widgets
+│       │       └── widgets/      # Enhanced home widgets
+│       │           └── play_button.dart    # Smart play button with trailer loading
 │       ├── 📽️ movie_detail/      # Movie detail
 │       │   ├── data/
 │       │   │   └── bloc/         # Movie detail BLoC
@@ -313,7 +400,22 @@ Struktur folder aplikasi ini dirancang menggunakan **Clean Architecture** dengan
 │       │   └── presentation/
 │       │       ├── screens/      # Register screen dengan validasi email
 │       │       └── widgets/      # Register form components
-│       └── 📋 user_list/         # User's movie list
+│       └── 📋 user_list/         # Enhanced User's movie list system
+│           ├── data/
+│           │   └── bloc/         # User List BLoC
+│           │       ├── user_list_bloc.dart   # Complete state management
+│           │       ├── user_list_event.dart  # Load, Add, Remove events  
+│           │       └── user_list_state.dart  # Loading, Loaded, Error states
+│           └── presentation/
+│               ├── screens/      # User list screens
+│               │   └── user_list_screen.dart # Enhanced with smooth animations
+│               ├── views/        # Theme-adaptive empty states
+│               │   ├── user_list_empty_dark_theme.dart
+│               │   └── user_list_empty_light_theme.dart
+│               └── widgets/      # Custom UI components
+│                   ├── add_to_list_button.dart      # State-aware button
+│                   ├── my_list_action_button.dart   # Reusable action button
+│                   └── user_list_movie_item.dart    # Custom list item
 ├── 🧪 test/                      # Unit & widget tests
 ├── 🌐 web/                       # Web platform files
 ├── 🖥️ windows/                   # Windows platform files
@@ -550,6 +652,8 @@ flutter create --platforms=web .
 | **Animations** | Lottie | 3.1+ | Smooth animations |
 | **Video Player** | WebView Flutter | 4.8+ | In-app video player |
 | **Storage** | SharedPreferences | 2.2+ | Local data persistence |
+| **JSON** | dart:convert | Built-in | JSON serialization for movie data |
+| **UI Components** | Material Design | Built-in | Modern UI components |
 
 ### 📦 **Dependencies Utama**
 
@@ -761,7 +865,48 @@ flutter run
 
 ---
 
-## 📄 Lisensi
+## � **Changelog**
+
+### 🆕 **Version 2.1.0** - *Latest Release*
+**Release Date**: August 9, 2025
+
+#### 🎉 **Major Features**
+- ✅ **Enhanced Home Screen**: 
+  - Added **Now Playing** category with real-time cinema data
+  - Added **Upcoming Movies** section with release dates
+  - Improved grid layout with high-quality posters
+
+- ✅ **Interactive Popular Header**:
+  - **Smart Play Button**: Auto-trailer loading with graceful fallbacks
+  - **Enhanced My List Button**: Real-time visual feedback with icon switching
+  - Loading indicators for better user experience
+
+- ✅ **My List System 2.0**:
+  - Complete **BLoC integration** with UserListBloc
+  - **Persistent storage** with SharedPreferences and JSON serialization
+  - **Cross-screen synchronization** for consistent user experience
+  - Theme-adaptive empty states with smooth animations
+
+#### 🛠️ **Technical Improvements**
+- Enhanced state management architecture
+- Improved error handling and loading states
+- Better UI/UX with smooth animations
+- Code optimization and performance improvements
+
+#### 🐛 **Bug Fixes**
+- Fixed layout shifting in My List empty state
+- Improved animation transitions with proper widget keys
+- Enhanced error handling for API failures
+
+### 📈 **Version 2.0.0** - *Previous Major Release*
+- Initial BLoC implementation
+- Supabase authentication integration
+- TMDB API integration
+- Basic movie browsing functionality
+
+---
+
+## �📄 Lisensi
 
 Proyek ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE) untuk detailnya.
 

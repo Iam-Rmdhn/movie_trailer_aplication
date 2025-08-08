@@ -64,6 +64,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 10),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: CustomeRowText(title: AppString.upcoming),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: ApiMovieListView(
+                movieType: MovieType.upcoming,
+              ),
+            ),
+          ),
         ],
       ),
     );

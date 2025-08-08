@@ -88,6 +88,22 @@ class TMDBMovie extends Equatable {
         popularity,
         video,
       ];
+
+  // Helper method to get full poster URL
+  String get fullPosterPath {
+    if (posterPath == null || posterPath!.isEmpty) {
+      return '';
+    }
+    return 'https://image.tmdb.org/t/p/w500$posterPath';
+  }
+
+  // Helper method to get full backdrop URL
+  String get fullBackdropPath {
+    if (backdropPath == null || backdropPath!.isEmpty) {
+      return '';
+    }
+    return 'https://image.tmdb.org/t/p/w1280$backdropPath';
+  }
 }
 
 class TMDBMoviesResponse extends Equatable {

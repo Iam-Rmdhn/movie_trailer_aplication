@@ -9,6 +9,8 @@ import 'package:movie_app/core/data/models/tmdb_movie.dart';
 import 'package:movie_app/feature/home/data/bloc/movie_bloc.dart';
 import 'package:movie_app/feature/home/data/bloc/movie_event.dart';
 import 'package:movie_app/feature/movie_detail/presentation/screens/movie_detail_screen.dart';
+import 'package:movie_app/feature/user_list/presentation/widgets/add_to_list_button.dart';
+import 'package:movie_app/feature/home/presentation/widgets/play_button.dart';
 
 class PopularMoviesHeaderView extends StatefulWidget {
   const PopularMoviesHeaderView({super.key});
@@ -324,34 +326,13 @@ class _PopularMoviesHeaderViewState extends State<PopularMoviesHeaderView> {
         const SizedBox(height: 16),
         Row(
           children: [
-            ElevatedButton.icon(
-              onPressed: () {
-                // Navigate to movie detail
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => MovieDetailScreen(movie: movie),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.play_arrow),
-              label: const Text('Play'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-              ),
+            PlayButton(
+              movie: movie,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
             ),
             const SizedBox(width: 12),
-            OutlinedButton.icon(
-              onPressed: () {
-                // TODO: Implement add to list functionality
-              },
-              icon: const Icon(Icons.add),
-              label: const Text('My List'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.white,
-                side: const BorderSide(color: Colors.white),
-              ),
-            ),
+            MyListActionButton(movie: movie),
           ],
         ),
       ],
